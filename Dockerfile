@@ -6,4 +6,4 @@ WORKDIR /app
 
 COPY main.py ./
 
-ENTRYPOINT python main.py
+ENTRYPOINT python -u main.py
