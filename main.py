@@ -64,7 +64,7 @@ async def warn_callback(callback: types.CallbackQuery):
         await bot.edit_message_text('\n'.join(message),
                                     callback.message.chat.id,
                                     callback.message.message_id,
-                                    reply_markup=warnMarkup if count < 7 else None)
+                                    reply_markup=warnMarkup if count < 6 else None)
         await callback.answer('спасибо что проголосовали')
     else:
         await callback.answer('вы уже проголосовали')
