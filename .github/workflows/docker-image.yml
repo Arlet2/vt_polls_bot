@@ -9,7 +9,10 @@ on:
 jobs:
 
   build:
-
+    env:
+      REGISTRY: hub.docker.com
+      IMAGE_NAME: vt_polls_bot
+      VERSION: latest
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +23,9 @@ jobs:
         DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
       run: docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_ACCESS_TOKEN"
     - name: Build the Docker image
-      run: docker build --push -t "$DOCKERHUB_USERNAME"/vt_polls_bot:$(date +%s) .
       env:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      run: docker build -t ${REGISTRY}/${IMAGE_NAME}:${VERSION} .
+    - name: Push to Docker hub
+      run: docker push ${REGISTRY}/${IMAGE_NAME}
       
