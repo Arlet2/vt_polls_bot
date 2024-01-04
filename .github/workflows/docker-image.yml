@@ -13,17 +13,14 @@ jobs:
       REGISTRY: hub.docker.com
       IMAGE_NAME: vt_polls_bot
       VERSION: latest
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
     - name: Build info
-      run: "echo \"REGISTRY: $REGISTRY; IMAGE_NAME: $IMAGE_NAME; VERSION: $VERSION; USER: $DOCKERHUB_USERNAME\""
+      run: "echo \"REGISTRY: $REGISTRY; IMAGE_NAME: $IMAGE_NAME; VERSION: $VERSION; USER: ${{ secrets.DOCKERHUB_USERNAME }}\""
     - name: Log in Docker hub
-      env:
-        DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-      run: docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_ACCESS_TOKEN"
+      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
     - name: Build the Docker image
-      run: docker build --push -t "$DOCKERHUB_USERNAME"/"$IMAGE_NAME":"$VERSION" .
+      run: docker build --push -t ${{ secrets.DOCKERHUB_USERNAME }}/"$IMAGE_NAME":"$VERSION" .
       
