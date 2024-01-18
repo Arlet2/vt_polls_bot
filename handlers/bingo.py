@@ -2,12 +2,12 @@ import os
 from itertools import product
 from textwrap import wrap
 
-from aiogram import types
+from aiogram import types, Router
 from aiogram.filters import Command
 from aiogram.types import FSInputFile
 from matplotlib import pyplot as plt
 
-from main import dp
+router = Router()
 
 
 class InvalidCommandSyntax(Exception):
@@ -61,7 +61,7 @@ def create_table(header: str, rows: [[str]], file_name: str):
     plt.close(fig)
 
 
-@dp.message(Command("bingo"))
+@router.message(Command("bingo"))
 async def bingo(message: types.Message):
     try:
         first_line, body = message.text.split("\n", maxsplit=1)

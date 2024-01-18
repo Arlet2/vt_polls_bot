@@ -1,13 +1,13 @@
 import os
 import time
 
-from aiogram import types
+from aiogram import types, Router
 from aiogram.filters import Command
 
-from main import dp
+router = Router()
 
 
-@dp.message(Command("shutdown"))
+@router.message(Command("shutdown"))
 async def meow(message: types.Message):
     if str(message.from_user.id) != os.getenv("FATHER_ID"):
         return

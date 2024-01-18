@@ -1,6 +1,11 @@
-from .poll import dp
-from .meow import dp
-from .shutdown import dp
-from .warn import dp
-from .bingo import dp
-__all__ = ["dp"]
+from aiogram import Router
+
+from handlers import bingo, meow, poll, shutdown, warn
+
+router = Router()
+
+router.include_routers(bingo.router,
+                       meow.router,
+                       poll.router,
+                       shutdown.router,
+                       warn.router)

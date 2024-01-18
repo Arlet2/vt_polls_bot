@@ -1,8 +1,7 @@
-from aiogram import F, types
+from aiogram import F, types, Router
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from main import dp
-
+router = Router()
 
 warnMarkupBuilder = InlineKeyboardBuilder()
 warnMarkupBuilder.add(types.InlineKeyboardButton(
@@ -12,7 +11,7 @@ warnMarkupBuilder.add(types.InlineKeyboardButton(
 warnMarkup = warnMarkupBuilder.as_markup()
 
 
-@dp.message(F.text.startswith('!warn'))
+@router.message(F.text.startswith('!warn'))
 async def warn(message: types.Message):
     command_data = message.text.split(maxsplit=1)
     if len(command_data) != 2:

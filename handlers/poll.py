@@ -1,8 +1,8 @@
-from aiogram import F, types
+from aiogram import F, types, Router
 
-from main import dp
+router = Router()
 
 
-@dp.message(F.poll)
+@router.message(F.poll)
 async def pin_message(message: types.Message):
     await message.pin()
