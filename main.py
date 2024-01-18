@@ -11,8 +11,6 @@ async def main():
 
 
 if __name__ == '__main__':
-    from handlers import dp
-
     token = os.getenv("VT_POLLS_API_TOKEN")
     if token == "":
         print("empty token")

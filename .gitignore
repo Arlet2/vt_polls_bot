@@ -1,0 +1,10 @@
+venv
+*.session
+*.db
+.env
+.idea
+
+**/__pycache__/
+*.py[cod]
+*$py.class
+/bingo_img
