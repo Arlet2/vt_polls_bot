@@ -8,6 +8,8 @@
 .idea/**/dictionaries
 .idea/**/shelf
 bingo_img/**
+/**/__pycache__/
+.idea
 
 # AWS User-specific
 .idea/**/aws.xml
