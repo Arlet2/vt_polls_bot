@@ -1,8 +1,10 @@
+import asyncio
 import os
 from itertools import product
 from textwrap import wrap
 
 from aiogram import types, Router
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import Command
 from aiogram.types import FSInputFile
 from matplotlib import pyplot as plt
@@ -38,7 +40,7 @@ message_usage = """
 def create_table(header: str, rows: [[str]], file_name: str):
     if len(header) > 100:
         raise InvalidCommandSyntax
-    header = header.replace(r"$", r"\$")
+    # header = header.replace(r"$", r"\$")
     column_count, row_count = len(rows), len(rows[0])
     for i, j in product(range(column_count), range(row_count)):
         if len(rows[i][j]) > 50:
@@ -65,17 +67,24 @@ def create_table(header: str, rows: [[str]], file_name: str):
 async def bingo(message: types.Message):
     try:
         first_line, body = message.text.split("\n", maxsplit=1)
-        header = "" if first_line.find(" ") == -1 else first_line[first_line.find(" ") + 1:]
+        header = ""
+        if first_line.find(" ") != -1:
+            header = first_line[first_line.find(" ") + 1:]
         rows = list(map(lambda l: l.lstrip("- ").split("\n- "), body.split("\n\n")))
         if len(set(map(len, rows))) != 1:  # Check if we have same amount of cells in each row
             raise InvalidCommandSyntax
         file_name = os.path.join("bingo_img", f"{message.chat.id}_{message.from_user.id}.png")
         create_table(header, rows, file_name)
-        await message.reply_photo(FSInputFile(file_name))
+        try:
+            await asyncio.wait_for(message.reply_photo(FSInputFile(file_name)), timeout=5)
+        finally:
+            os.remove(file_name)
         return
 
     except (InvalidCommandSyntax, ValueError):
         await message.reply(message_usage)
+    except (TelegramBadRequest, TimeoutError):
+        await message.reply("Бинго слишком велико!")
 
 
 if __name__ == "__main__":
