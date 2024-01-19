@@ -1,6 +1,6 @@
 FROM python:3.11.6-alpine3.17
 
-RUN pip install aiogram
+RUN pip install -r requirements.txt
 
 WORKDIR /app
 
