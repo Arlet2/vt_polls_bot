@@ -11,7 +11,8 @@ async def quiz_creation(message: types.Message):
     if len(message.text) > 105:
         await message.reply("Название должно быть короче 100 символов!")
         return
-    await message.reply("quiz: \b" + message.text[5:])
+    message = await message.reply("quiz: \b" + message.text[5:])
+    await message.pin()
 
 
 @router.message(F.reply_to_message.text.startswith("quiz: "))
