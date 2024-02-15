@@ -6,14 +6,15 @@ from aiogram import Bot, Dispatcher
 import handlers
 
 dp = Dispatcher()
+token = os.getenv("VT_POLLS_API_TOKEN")
+if token == "":
+    print("empty token")
+    exit()
+bot = Bot(token)
 
 
 async def main():
-    token = os.getenv("VT_POLLS_API_TOKEN")
-    if token == "":
-        print("empty token")
-        exit()
-    bot = Bot(token)
+    global bot
     print("Bot was started")
     dp.include_routers(handlers.router)
     await dp.start_polling(bot)
