@@ -3,4 +3,4 @@
 all:
 
 docker-build:
-	docker build -t vt_polls_bot .
+	docker compose up

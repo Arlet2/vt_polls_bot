@@ -2,8 +2,11 @@ import asyncio
 import os
 
 from aiogram import Bot, Dispatcher
+from dotenv import load_dotenv
 
 import handlers
+
+load_dotenv()
 
 dp = Dispatcher()
 token = os.getenv("VT_POLLS_API_TOKEN")

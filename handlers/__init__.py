@@ -1,6 +1,7 @@
 from aiogram import Router
 
-from handlers import bingo, meow, poll, shutdown, warn, quiz
+from handlers import shutdown, poll, meow, quiz
+from handlers import bingo, warn
 
 router = Router()
 

@@ -1,9 +1,11 @@
 FROM python:3.11.6-alpine3.17
 
-RUN pip install -r requirements.txt
-
 WORKDIR /app
 
-COPY main.py ./
+COPY requirements.txt ./
+
+RUN pip install -r requirements.txt
+
+COPY . .
 
 ENTRYPOINT python -u main.py

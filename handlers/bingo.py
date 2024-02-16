@@ -89,5 +89,5 @@ async def bingo(message: types.Message):
 
 if __name__ == "__main__":
     create_table("Header1 ",
-                 [['Это типичная строка на 50 символов ааааааааааааааа', 'три'] * 2]*4,
+                 [['Это типичная строка на 50 символов ааааааааааааааа', 'три'] * 2] * 4,
                  os.path.join("..", "bingo_img", "test.png"))
