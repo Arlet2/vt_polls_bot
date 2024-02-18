@@ -6,6 +6,11 @@ from main import bot, redis
 
 router = Router()
 
+quiz_usage = """
+Команда /quiz позволяет устраивать опросы прямо в чате!\n
+Чтобы создать опрос напишите /quiz <тема опроса>\n
+Чтобы оставить ответ, ответьте на сообщение бота с квизом!\n
+Чтобы оставить голос за конкретный ответ поставьте реакцию 👍 на ответ"""
 
 def redis_key_for_quiz_answers(message_id: int, chat_id: int) -> str:
     return f"quiz:{chat_id}:{message_id}"
@@ -38,7 +43,7 @@ async def quiz_creation(message: types.Message):
         return
     quiz_name = message.text[len("/quiz"):].strip()
     if quiz_name == "":
-        await message.reply("Название должно быть не пустым")
+        await message.reply(quiz_usage)
         return
     sent_message = await message.reply(create_poll_message(quiz_name, dict()))
     redis.set(redis_key_for_quiz_name(sent_message.message_id, sent_message.chat.id),
@@ -78,7 +83,7 @@ async def quiz_answer(message: types.Message):
 
 @router.message_reaction(F.func(lambda msg: redis.exists(redis_key_for_answer_data(msg.message_id, msg.chat.id)))
                          & (F.func(lambda msg: is_emoji_in_reaction("👍", msg.new_reaction))
-                            | F.func(lambda msg: is_emoji_in_reaction("👍", msg.old_reaction)) ))
+                            | F.func(lambda msg: is_emoji_in_reaction("👍", msg.old_reaction))))
 async def message_reaction_handler(message_reaction: types.MessageReactionUpdated):
     message_id = redis.hget(redis_key_for_answer_data(message_reaction.message_id, message_reaction.chat.id),
                             "message_id")
