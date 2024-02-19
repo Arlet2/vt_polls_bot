@@ -11,6 +11,7 @@ bingo_img/**
 /**/__pycache__/
 .idea
 .env
+.dockerignore
 
 # AWS User-specific
 .idea/**/aws.xml

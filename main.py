@@ -14,6 +14,9 @@ redis_host = os.getenv("REDIS_HOST")
 redis_port = os.getenv("REDIS_PORT")
 
 if not token or not redis_port or not redis_host:
+    print(token)
+    print(redis_port)
+    print(redis_host)
     print("Put token and redis connection credentials in .env")
     exit(1)
 
