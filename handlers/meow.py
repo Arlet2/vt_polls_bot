@@ -6,4 +6,4 @@ router = Router()
 
 @router.message(Command("meow"))
 async def meow(message: types.Message):
-    await message.answer('meow <3')
+    await message.answer('meow :3')
