@@ -2,7 +2,6 @@
 
 Some ideas to do:
 
-- Autodeploy docker image using github actions
 - Ignore flag for /quiz. User can reply without adding his answer to the quiz
 - Anti-spam system (spam of commands /quiz and other)
 - Improve /bingo UI
