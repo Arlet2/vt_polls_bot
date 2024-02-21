@@ -8,7 +8,7 @@ all:
 	make docker-save-image
 
 docker-build:
-	docker build -t vt_polls_bot:${VERSION} .
+	docker compose up
 
 docker-save-image:
 	docker save vt_polls_bot:${VERSION} > vt_polls_bot_${VERSION}.img
