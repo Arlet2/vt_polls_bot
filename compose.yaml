@@ -1,19 +1,21 @@
 services:
   main-app:
+    container_name: bot
     build:
       context: .
     depends_on:
-      - redis
+      - mongo
     env_file:
       - .env
 
-  redis:
-    image: redis:7.2.4-alpine
+  mongo:
+    image: mongo
+    container_name: mongo
     restart: always
-    volumes:
-      - redis:/data
     ports:
-      - 6379:6379
+      - 27017:27017
+    env_file:
+      - .env
 
 volumes:
   redis:
