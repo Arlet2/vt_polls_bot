@@ -1,4 +1,4 @@
-name: di
+name: ci
 
 on:
   push:

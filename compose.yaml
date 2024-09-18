@@ -1,12 +1,17 @@
+version: "3"
 services:
   main-app:
-    container_name: bot
-    build:
-      context: .
+    image: arlet2/vt_polls_bot
+    env_file: .env
     depends_on:
       - mongo
-    env_file:
-      - .env
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json
+    command: --interval 30
 
   mongo:
     image: mongo
@@ -14,8 +19,8 @@ services:
     restart: always
     ports:
       - 27017:27017
-    env_file:
-      - .env
+    volumes:
+      - mongo:/data/db
 
 volumes:
-  redis:
+  mongo:
