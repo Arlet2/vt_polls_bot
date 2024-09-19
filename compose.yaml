@@ -3,6 +3,8 @@ services:
   main-app:
     image: arlet2/vt_polls_bot
     env_file: .env
+    depends_on:
+      - mongo
 
   watchtower:
     image: containrrr/watchtower
@@ -11,14 +13,14 @@ services:
       - /root/.docker/config.json:/config.json
     command: --interval 30
 
-  redis:
-    image: redis:7.2.4-alpine
-    restart: unless-stopped
-    volumes:
-      - redis:/data
-    command: redis-server --save 60 1 --loglevel warning
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
     ports:
-      - 6379:6379
+      - 27017:27017
+    volumes:
+      - mongo:/data/db
 
 volumes:
-  redis:
+  mongo:
